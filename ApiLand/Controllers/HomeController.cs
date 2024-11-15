@@ -18,7 +18,17 @@ namespace ApiLand.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult WebAPI()
+        {
+            return View();
+        }
+
+        public IActionResult GraphQL()
+        {
+            return View();
+        }
+
+        public IActionResult MongoDB()
         {
             return View();
         }
