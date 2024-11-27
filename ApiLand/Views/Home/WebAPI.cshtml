@@ -10,6 +10,9 @@
     {
         $( "#apiDropdown" ).change( function ()
         {
+            $( "#result" ).hide();
+            $( "#dogVideo" ).hide();
+
             var selectedValue = $( this ).val();
 
             if ( selectedValue )
@@ -19,8 +22,21 @@
                     type: 'GET',
                     data: { apiType: selectedValue },
                     success: function ( data )
-                    {
-                        $( "#result" ).html( "<pre>" + JSON.stringify( data, null, 2 ) + "</pre>" );
+                    {   
+                        if ( selectedValue == "openbrewery" )
+                        {
+                            $( "#result" ).html( "<pre>" + JSON.stringify( data, null, 2 ) + "</pre>" );
+                            $( "#result" ).show();
+                        }
+                        else {
+                            let videoUrl = "https://random.dog/66b9ea90-1493-4ddc-ab9b-f2b87385e196.mp4";
+                           // $( "#dogVideo" ).attr( "src", videoUrl );
+                          //  $( "#dogVideo" ).show();
+                           // $( "#dogVideo" )[ 0 ].play();
+                            $( "#dogText" ).html( "<pre>" + JSON.stringify( data, null, 2 ) + "</pre>" );
+
+                        }
+                        
                     },
                     error: function ( xhr, status, error )
                     {
@@ -44,66 +60,14 @@
 
     <select id="apiDropdown">
         <option value="">--Select an API--</option>
-        <option value="api1">API 1</option>
-        <option value="api2">API 2</option>
+        <option value="openbrewery">Open Brewery API</option>
+        <option value="randomdog">Random Dog API</option>
     </select>
 
-    <!-- Dropdown for selecting panels -->
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            Select Panel
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li>
-                <form method="get" action="/Home/Index" style="display: inline;">
-                    <input type="hidden" name="panel" value="panel1" />
-                    <button type="submit" class="dropdown-item">Panel 1</button>
-                </form>
-            </li>
-            <li>
-                <form method="get" action="/Home/Index" style="display: inline;">
-                    <input type="hidden" name="panel" value="panel2" />
-                    <button type="submit" class="dropdown-item">Panel 2</button>
-                </form>
-            </li>
-            <li>
-                <form method="get" action="/Home/Index" style="display: inline;">
-                    <input type="hidden" name="panel" value="panel3" />
-                    <button type="submit" class="dropdown-item">Panel 3</button>
-                </form>
-            </li>
-        </ul>
-    </div>
-
-    <div style="margin-top: 20px; border: 1px solid #ccc; padding: 15px;">
-        @if (activePanel == "panel1")
-        {
-            <div id="panel1" class="panel">
-                <h2>Panel 1 Content</h2>
-                <p>This is the content for panel 1.</p>
-            </div>
-        }
-        else if (activePanel == "panel2")
-        {
-            <div id="panel2" class="panel">
-                <h2>Panel 2 Content</h2>
-                <p>This is the content for panel 2.</p>
-            </div>
-        }
-        else if (activePanel == "panel3")
-        {
-            <div id="panel3" class="panel">
-                <h2>Panel 3 Content</h2>
-                <p>This is the content for panel 3.</p>
-            </div>
-        }
-        else
-        {
-            <div id="defaultPanel" class="panel">
-                <h2>Default Panel</h2>
-                <p>No panel selected.</p>
-            </div>
-        }
+    <div>
+        <p id="result"></p>
+        <video id="dogVideo"/>
+        <p id="dogText"></p>
     </div>
 
 </div>

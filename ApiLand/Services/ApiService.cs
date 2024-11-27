@@ -13,16 +13,20 @@ public class ApiService : IApiService
 
     public async Task<string> FetchDataAsync( string apiType )
     {
-        var client = _httpClientFactory.CreateClient();
-
-        // Determine the API endpoint based on the selection
-        string apiEndpoint = apiType switch
+        string apiEndpoint = "";
+        switch ( apiType )
         {
-            "api1" => "https://api.example.com/endpoint1",
-            "api2" => "https://api.example.com/endpoint2",
-            _ => throw new ArgumentException( "Invalid API type", nameof( apiType ) )
-        };
+            case "openbrewery":
+                apiEndpoint = "https://api.openbrewerydb.org/v1/breweries";
+                break;
+            case "randomdog":
+                apiEndpoint = "https://random.dog/woof.json";
+                break;
+            default:
+                break;
+        }
 
+        var client = _httpClientFactory.CreateClient();
         var response = await client.GetAsync( apiEndpoint );
 
         if ( !response.IsSuccessStatusCode )
